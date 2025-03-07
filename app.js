@@ -1,11 +1,21 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const fetch = require("node-fetch");
+const morgan = require("morgan");
 const { userModel } = require("./models/Users");
-const SkinAnalysis = require("./models/SkinAnalysis");
 const auth = require("./middleware/auth");
+const Prediction = require("./models/Prediction");
+const Product = require("./models/Product");
+const PredictionModel = require('./models/PredictionModel');
+const { predictSkinType, predictSkinCondition } = require("./utils/prediction.js");
+
+
+
+
 
 
 const app = express();
@@ -13,6 +23,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({ origin: "*" }));
+app.use(morgan("dev"));
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://stina:stina2006@cluster0.rfrzosg.mongodb.net/skinCaredb?retryWrites=true&w=majority&appName=Cluster0")
@@ -92,29 +103,81 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-// Save Skin Analysis Response
-app.post("/submit", auth, async (req, res) => {
+app.post("/api/predict", async (req, res) => {
     try {
-      const { responses } = req.body;
-      const newAnalysis = new SkinAnalysis({ userId: req.user.id, responses });
-      await newAnalysis.save();
-      res.status(201).json({ message: "Analysis submitted successfully" });
+        let { Water_Intake_Glasses, Sleep_Hours, ...otherData } = req.body;
   
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+        // Convert Water Intake and Sleep Hours to numeric values
+        if (typeof Water_Intake_Glasses === "string") {
+            Water_Intake_Glasses = parseFloat(Water_Intake_Glasses.split('-').reduce((a, b) => (parseFloat(a) + parseFloat(b)) / 2, 0));
+        }
+  
+        if (typeof Sleep_Hours === "string") {
+            Sleep_Hours = Sleep_Hours.includes("+") ? parseFloat(Sleep_Hours.replace("+", "")) : parseFloat(Sleep_Hours);
+        }
+  
+        // **Run ML model to predict skin type & condition**
+        const predictedSkinType = predictSkinType(Water_Intake_Glasses, Sleep_Hours, otherData);
+        const predictedSkinCondition = predictSkinCondition(Water_Intake_Glasses, Sleep_Hours, otherData);
+  
+        // **Save to database**
+        const prediction = new PredictionModel({
+            Water_Intake_Glasses,
+            Sleep_Hours,
+            ...otherData,
+            predictedSkinType, // Ensure this is stored
+            predictedSkinCondition // Ensure this is stored
+        });
+  
+        await prediction.save();
+  
+        // **✅ Send correct response**
+        res.status(201).json({
+            message: "Prediction saved successfully",
+            prediction: {
+                userId: prediction.userId,  
+                predictedSkinType,  
+                predictedSkinCondition,  
+                _id: prediction._id  
+            }
+        });
+  
+    } catch (error) {
+        console.error("❌ Prediction Error:", error);
+        res.status(500).json({ error: "Prediction failed", details: error.message });
     }
   });
   
-  // Get User's Past Skin Analyses
-  app.get("/history", auth, async (req, res) => {
-    try {
-      const analyses = await SkinAnalysis.find({ userId: req.user.id }).sort({ createdAt: -1 });
-      res.json(analyses);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-  
+
+
+// Fetch User Prediction History
+app.get("/api/predictions/:userId", async (req, res) => {
+  try {
+      const userPredictions = await Prediction.find({ userId: req.params.userId }).sort({ createdAt: -1 });
+      res.json(userPredictions);
+  } catch (error) {
+      console.error("❌ Error fetching predictions:", error);
+      res.status(500).json({ error: "Error fetching user history" });
+  }
+});
+
+// Product Recommendations API
+app.get("/api/recommend", async (req, res) => {
+  try {
+      const { skinType, skinCondition } = req.query;
+      if (!skinType || !skinCondition) {
+          return res.status(400).json({ error: "skinType and skinCondition are required" });
+      }
+
+      const recommendedProducts = await Product.find({ skinType, skinCondition });
+      res.json(recommendedProducts);
+  } catch (error) {
+      console.error("❌ Recommendation Error:", error);
+      res.status(500).json({ error: "Error fetching recommendations" });
+  }
+});
+
+
 
 
 // Start Server

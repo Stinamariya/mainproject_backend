@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "ml-random-forest": "^2.1.0",
     "mongoose": "^8.10.1",
     "morgan": "^1.10.0"
   }

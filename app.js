@@ -12,6 +12,8 @@ const Prediction = require("./models/Prediction");
 const Product = require("./models/Product");
 const PredictionModel = require('./models/PredictionModel');
 const { predictSkinType, predictSkinCondition } = require("./utils/prediction.js");
+const { predictSkinTypeAndCondition } = require("./utils/prediction");
+
 
 
 
@@ -103,79 +105,45 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-app.post("/api/predict", async (req, res) => {
+// Route for predicting skin type and condition
+app.post("/predict", async (req, res) => {
     try {
-        let { Water_Intake_Glasses, Sleep_Hours, ...otherData } = req.body;
-  
-        // Convert Water Intake and Sleep Hours to numeric values
-        if (typeof Water_Intake_Glasses === "string") {
-            Water_Intake_Glasses = parseFloat(Water_Intake_Glasses.split('-').reduce((a, b) => (parseFloat(a) + parseFloat(b)) / 2, 0));
+        const data = req.body;
+        console.log("Received Data:", data); // Debugging log
+
+        if (!data.age || !data.gender || !data.waterIntakeGlasses) {
+            return res.status(400).json({ error: "Missing required fields" });
         }
-  
-        if (typeof Sleep_Hours === "string") {
-            Sleep_Hours = Sleep_Hours.includes("+") ? parseFloat(Sleep_Hours.replace("+", "")) : parseFloat(Sleep_Hours);
-        }
-  
-        // **Run ML model to predict skin type & condition**
-        const predictedSkinType = predictSkinType(Water_Intake_Glasses, Sleep_Hours, otherData);
-        const predictedSkinCondition = predictSkinCondition(Water_Intake_Glasses, Sleep_Hours, otherData);
-  
-        // **Save to database**
-        const prediction = new PredictionModel({
-            Water_Intake_Glasses,
-            Sleep_Hours,
-            ...otherData,
-            predictedSkinType, // Ensure this is stored
-            predictedSkinCondition // Ensure this is stored
-        });
-  
-        await prediction.save();
-  
-        // **✅ Send correct response**
-        res.status(201).json({
-            message: "Prediction saved successfully",
-            prediction: {
-                userId: prediction.userId,  
-                predictedSkinType,  
-                predictedSkinCondition,  
-                _id: prediction._id  
-            }
-        });
-  
+
+        const prediction = await predictSkinTypeAndCondition(data);
+        res.json(prediction);
     } catch (error) {
-        console.error("❌ Prediction Error:", error);
-        res.status(500).json({ error: "Prediction failed", details: error.message });
+        console.error("Prediction Error:", error);
+        res.status(500).json({ error: "Server error during prediction" });
+    }
+});
+  
+  // Route to fetch recommended products based on prediction
+  app.get("/api/recommend/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const userPrediction = await Prediction.findOne({ userId });
+  
+      if (!userPrediction) {
+        return res.status(404).json({ error: "No prediction found for this user" });
+      }
+  
+      const recommendedProducts = await Product.find({
+        skinType: userPrediction.skinType,
+        skinCondition: userPrediction.skinCondition,
+      });
+  
+      res.json(recommendedProducts);
+    } catch (error) {
+      console.error("Product recommendation error:", error);
+      res.status(500).json({ error: "Failed to fetch recommended products" });
     }
   });
-  
-
-
-// Fetch User Prediction History
-app.get("/api/predictions/:userId", async (req, res) => {
-  try {
-      const userPredictions = await Prediction.find({ userId: req.params.userId }).sort({ createdAt: -1 });
-      res.json(userPredictions);
-  } catch (error) {
-      console.error("❌ Error fetching predictions:", error);
-      res.status(500).json({ error: "Error fetching user history" });
-  }
-});
-
-// Product Recommendations API
-app.get("/api/recommend", async (req, res) => {
-  try {
-      const { skinType, skinCondition } = req.query;
-      if (!skinType || !skinCondition) {
-          return res.status(400).json({ error: "skinType and skinCondition are required" });
-      }
-
-      const recommendedProducts = await Product.find({ skinType, skinCondition });
-      res.json(recommendedProducts);
-  } catch (error) {
-      console.error("❌ Recommendation Error:", error);
-      res.status(500).json({ error: "Error fetching recommendations" });
-  }
-});
 
 
 

@@ -24,8 +24,14 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors({
+    origin: "http://localhost:3000", // Allow frontend requests
+    methods: ["GET", "POST"], // Allow specific methods
+    allowedHeaders: ["Content-Type", "Authorization"] // Allow necessary headers
+  }));
+  
 app.use(morgan("dev"));
+
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://stina:stina2006@cluster0.rfrzosg.mongodb.net/skinCaredb?retryWrites=true&w=majority&appName=Cluster0")
@@ -105,48 +111,63 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-// Route for predicting skin type and condition
+// Prediction API (Express) - Integrate with Flask API
 app.post("/predict", async (req, res) => {
     try {
-        const data = req.body;
-        console.log("Received Data:", data); // Debugging log
+        // Assuming Flask API is running on http://localhost:5000
+        const flaskApiUrl = "http://127.0.0.1:5000/predict";
+        const response = await fetch(flaskApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(req.body) // Send data to Flask API
+        });
 
-        if (!data.age || !data.gender || !data.waterIntakeGlasses) {
-            return res.status(400).json({ error: "Missing required fields" });
+        const data = await response.json();
+
+        if (data.error) {
+            return res.status(500).json({ error: "Failed to process prediction." });
         }
 
-        const prediction = await predictSkinTypeAndCondition(data);
-        res.json(prediction);
+        // Send response from Flask API back to client
+        res.json({
+            predictedSkinType: data.skinType,
+            predictedSkinCondition: data.condition
+        });
+
     } catch (error) {
-        console.error("Prediction Error:", error);
-        res.status(500).json({ error: "Server error during prediction" });
+        console.error("❌ Prediction Error:", error);
+        res.status(500).json({ error: "Failed to process prediction." });
     }
 });
+
+// API to get recommended products based on skin type and concern
+app.post("/recommend", async (req, res) => {
+    const { skin_type, skin_condition } = req.body;
   
-  // Route to fetch recommended products based on prediction
-  app.get("/api/recommend/:userId", async (req, res) => {
+    if (!skin_type || !skin_condition) {
+      return res.status(400).json({ error: "Missing skin type or concern" });
+    }
+  
     try {
-      const { userId } = req.params;
-      const userPrediction = await Prediction.findOne({ userId });
-  
-      if (!userPrediction) {
-        return res.status(404).json({ error: "No prediction found for this user" });
-      }
-  
+      // Fetch products from MongoDB that match the skin type and concern
       const recommendedProducts = await Product.find({
-        skinType: userPrediction.skinType,
-        skinCondition: userPrediction.skinCondition,
+        "Skin type": skin_type,
+        Concern: skin_condition,
       });
   
-      res.json(recommendedProducts);
+      res.json({
+        recommended_products: recommendedProducts,
+      });
     } catch (error) {
-      console.error("Product recommendation error:", error);
-      res.status(500).json({ error: "Failed to fetch recommended products" });
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while fetching products" });
     }
   });
-
-
-
-
+  
+  
+  // Start Server
+  const PORT = 5000;
 // Start Server
 app.listen(3031, () => console.log(" Server started"));

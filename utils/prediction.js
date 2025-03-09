@@ -1,51 +1,78 @@
-const { RandomForestClassifier } = require("ml-random-forest");
+const { randomForestModel, randomForestConditionModel } = require("../models/PredictionModel");
 
-// ✅ Check: Ensure training data is not empty
-const trainingData = [
-  { age: 25, gender: "Female", waterIntakeGlasses: "5", skinType: "Oily", skinCondition: "Acne-Prone" },
-  { age: 30, gender: "Male", waterIntakeGlasses: "7", skinType: "Dry", skinCondition: "Sensitive" },
-  { age: 22, gender: "Female", waterIntakeGlasses: "6", skinType: "Combination", skinCondition: "Normal" }
-];
-
-// ✅ Check: Convert data properly
-const X_train = trainingData.map(d => [
-  d.age,
-  d.gender === "Male" ? 1 : 0,
-  parseInt(d.waterIntakeGlasses)
-]);
-
-const y_train_skinType = trainingData.map(d => d.skinType);
-const y_train_skinCondition = trainingData.map(d => d.skinCondition);
-
-if (X_train.length === 0 || y_train_skinType.length === 0 || y_train_skinCondition.length === 0) {
-  throw new Error("Training data is empty! Check training dataset.");
+function preprocessInput(data) {
+    return {
+        Age: Number(data.Age),
+        Gender: data.Gender === "Male" ? 1 : 0,
+        Water_Intake_Glasses: convertWaterIntake(data.Water_Intake_Glasses),
+        Diet_Quality: convertDietQuality(data.Diet_Quality),
+        Sleep_Hours: isNaN(Number(data.Sleep_Hours)) ? 7 : Number(data.Sleep_Hours), // Default to 7 hours if NaN
+        Exercise_Frequency: convertExerciseFrequency(data.Exercise_Frequency),
+        Stress_Level: convertStressLevel(data.Stress_Level),
+        Sun_Exposure: convertSunExposure(data.Sun_Exposure),
+        Hydration_Level: convertHydrationLevel(data.Hydration_Level),
+        Acne_History: data.Acne_History === "Yes" ? 1 : 0,
+        Redness: data.Redness === "Yes" ? 1 : 0,
+        Sensitivity_to_Products: data.Sensitivity_to_Products === "Yes" ? 1 : 0,
+        Wrinkles_Fine_Lines: data.Wrinkles_Fine_Lines === "Yes" ? 1 : 0,
+        Dark_Spots: data.Dark_Spots === "Yes" ? 1 : 0
+    };
 }
 
-const model_skinType = new RandomForestClassifier();
-const model_skinCondition = new RandomForestClassifier();
-
-// ✅ Check: Ensure correct training data format before training
-try {
-  model_skinType.train(X_train, y_train_skinType);
-  model_skinCondition.train(X_train, y_train_skinCondition);
-} catch (error) {
-  console.error("Error training model:", error);
+// Mapping functions
+function convertWaterIntake(value) {
+    const mapping = { "0-2": 1, "3-4": 2, "4-6": 3, "7-8": 4, "9+": 5 };
+    return mapping[value] || 0;
 }
 
-function predictSkinTypeAndCondition(data) {
-  const inputFeatures = [data.age, data.gender === "Male" ? 1 : 0, parseInt(data.waterIntakeGlasses)];
+function convertDietQuality(value) {
+    const mapping = { "Poor": 1, "Average": 2, "Good": 3, "Excellent": 4 };
+    return mapping[value] || 0;
+}
 
-  if (X_train.length === 0) {
-    throw new Error("Model training failed due to missing training data.");
-  }
+function convertExerciseFrequency(value) {
+    const mapping = { "Never": 1, "Rarely": 2, "Sometimes": 3, "Often": 4, "Daily": 5 };
+    return mapping[value] || 0;
+}
 
-  const predictedSkinType = model_skinType.predict([inputFeatures])[0];
-  const predictedSkinCondition = model_skinCondition.predict([inputFeatures])[0];
+function convertStressLevel(value) {
+    const mapping = { "Low": 1, "Medium": 2, "High": 3 };
+    return mapping[value] || 0;
+}
 
-  return {
-    skinType: predictedSkinType,
-    skinCondition: predictedSkinCondition,
-  };
+function convertSunExposure(value) {
+    const mapping = { "Low": 1, "Moderate": 2, "High": 3 };
+    return mapping[value] || 0;
+}
+
+function convertHydrationLevel(value) {
+    const mapping = { "Dehydrated": 1, "Normal": 2, "Well-Hydrated": 3 };
+    return mapping[value] || 0;
+}
+
+async function predictSkinTypeAndCondition(data) {
+    console.log("🔹 Raw Input Data:", data);
+    
+    const processedData = preprocessInput(data);
+    console.log("✅ Processed Data for Model:", processedData);
+
+    try {
+        const inputArray = Object.values(processedData);
+
+        // Ensure models are loaded before prediction
+        if (!randomForestModel || !randomForestConditionModel) {
+            throw new Error("Model is not loaded properly. Check the model path and initialization.");
+        }
+
+        const predictedSkinType = randomForestModel.predict([inputArray])[0];
+        const predictedSkinCondition = randomForestConditionModel.predict([inputArray])[0];
+
+        console.log("✅ Prediction Output:", { predictedSkinType, predictedSkinCondition });
+        return { predictedSkinType, predictedSkinCondition };
+    } catch (error) {
+        console.error("❌ Prediction Function Error:", error);
+        throw error;
+    }
 }
 
 module.exports = { predictSkinTypeAndCondition };

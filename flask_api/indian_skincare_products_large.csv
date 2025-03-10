@@ -1,0 +1,251 @@
+Skin Type,Skin Condition,Concern,Product Name,Product URL,Product Image URL
+Oily,Eczema,Redness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Dry,Psoriasis,Wrinkles,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Normal,Healthy,Wrinkles,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Oily,Healthy,Dark Spots,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Dry,Rosacea,Sensitivity,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Normal,Healthy,Oiliness,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Normal,Psoriasis,Dark Spots,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Normal,Rosacea,Redness,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Combination,Acne,Oiliness,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Oily,Psoriasis,Redness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Rosacea,Dryness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Combination,Psoriasis,Dryness,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Dry,Healthy,Oiliness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Dry,Eczema,Dryness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Dry,Healthy,Dryness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Eczema,Acne,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Combination,Healthy,Redness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Normal,Acne,Acne,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Oily,Rosacea,Acne,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Oily,Psoriasis,Acne,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Oily,Psoriasis,Dark Spots,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Oily,Psoriasis,Wrinkles,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Dry,Eczema,Wrinkles,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Normal,Acne,Dryness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Oily,Eczema,Wrinkles,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Dry,Rosacea,Acne,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Oily,Rosacea,Dryness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Oily,Psoriasis,Acne,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Dry,Rosacea,Dryness,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Dry,Psoriasis,Dryness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Combination,Acne,Wrinkles,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Oily,Eczema,Sensitivity,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Combination,Acne,Acne,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Oily,Acne,Oiliness,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Normal,Psoriasis,Dark Spots,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Combination,Rosacea,Redness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Normal,Acne,Oiliness,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Combination,Acne,Acne,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Oily,Rosacea,Oiliness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Healthy,Wrinkles,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Oily,Acne,Redness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Eczema,Dark Spots,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Combination,Acne,Oiliness,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Normal,Healthy,Redness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Normal,Eczema,Dark Spots,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Combination,Eczema,Wrinkles,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Oily,Acne,Dark Spots,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Oily,Acne,Oiliness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Combination,Eczema,Dryness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Oily,Psoriasis,Redness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Normal,Eczema,Wrinkles,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Combination,Psoriasis,Wrinkles,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Dry,Rosacea,Oiliness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Combination,Eczema,Dryness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Rosacea,Dryness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Oily,Rosacea,Oiliness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Normal,Acne,Dryness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Dry,Eczema,Dryness,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Dry,Healthy,Redness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Psoriasis,Sensitivity,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Dry,Acne,Redness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Oily,Rosacea,Dark Spots,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Dry,Eczema,Dark Spots,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Dry,Healthy,Sensitivity,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Normal,Healthy,Acne,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Combination,Eczema,Sensitivity,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Combination,Psoriasis,Acne,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Dry,Rosacea,Redness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Healthy,Wrinkles,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Healthy,Oiliness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Normal,Psoriasis,Wrinkles,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Normal,Eczema,Redness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Normal,Acne,Oiliness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Oily,Eczema,Sensitivity,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Acne,Sensitivity,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Acne,Redness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Acne,Redness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Normal,Healthy,Oiliness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Rosacea,Redness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Combination,Psoriasis,Dark Spots,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Oily,Healthy,Sensitivity,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Combination,Healthy,Wrinkles,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Oily,Psoriasis,Redness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Healthy,Dark Spots,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Dry,Acne,Sensitivity,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Healthy,Oiliness,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Combination,Eczema,Sensitivity,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Acne,Oiliness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Combination,Eczema,Dark Spots,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Oily,Rosacea,Sensitivity,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Dry,Eczema,Dryness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Oily,Rosacea,Acne,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Acne,Dryness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Oily,Healthy,Wrinkles,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Oily,Rosacea,Wrinkles,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Normal,Healthy,Dryness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Eczema,Sensitivity,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Dry,Psoriasis,Wrinkles,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Oily,Acne,Wrinkles,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Normal,Eczema,Redness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Normal,Psoriasis,Sensitivity,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Eczema,Oiliness,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Combination,Psoriasis,Sensitivity,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Oily,Acne,Wrinkles,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Dry,Acne,Dark Spots,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Normal,Psoriasis,Sensitivity,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Dry,Rosacea,Acne,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Normal,Eczema,Acne,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Eczema,Dark Spots,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Normal,Eczema,Sensitivity,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Normal,Eczema,Oiliness,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Combination,Rosacea,Redness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Healthy,Sensitivity,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Combination,Eczema,Redness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Oily,Rosacea,Sensitivity,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Normal,Acne,Redness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Eczema,Wrinkles,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Acne,Dryness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Normal,Rosacea,Oiliness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Normal,Acne,Oiliness,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Normal,Healthy,Dark Spots,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Oily,Rosacea,Dark Spots,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Normal,Psoriasis,Dark Spots,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Oily,Acne,Wrinkles,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Psoriasis,Wrinkles,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Rosacea,Dryness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Dry,Eczema,Dryness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Oily,Acne,Dark Spots,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Oily,Acne,Sensitivity,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Dry,Eczema,Wrinkles,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Combination,Rosacea,Acne,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Combination,Rosacea,Oiliness,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Combination,Healthy,Wrinkles,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Dry,Psoriasis,Wrinkles,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Combination,Eczema,Dryness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Combination,Eczema,Oiliness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Healthy,Sensitivity,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Normal,Acne,Acne,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Normal,Acne,Oiliness,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Combination,Healthy,Wrinkles,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Combination,Healthy,Acne,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Combination,Healthy,Redness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Normal,Healthy,Wrinkles,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Psoriasis,Wrinkles,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Psoriasis,Wrinkles,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Eczema,Sensitivity,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Dry,Rosacea,Wrinkles,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Normal,Rosacea,Wrinkles,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Rosacea,Oiliness,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Combination,Eczema,Sensitivity,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Dry,Psoriasis,Oiliness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Dry,Eczema,Redness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Dry,Acne,Sensitivity,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Healthy,Sensitivity,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Oily,Psoriasis,Oiliness,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Normal,Eczema,Dryness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Healthy,Sensitivity,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Combination,Acne,Dark Spots,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Oily,Acne,Oiliness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Normal,Psoriasis,Redness,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Normal,Psoriasis,Redness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Combination,Rosacea,Dark Spots,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Dry,Acne,Acne,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Dry,Eczema,Oiliness,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Combination,Psoriasis,Redness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Normal,Psoriasis,Dryness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Dry,Rosacea,Dryness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Dry,Acne,Oiliness,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Normal,Acne,Wrinkles,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Normal,Healthy,Sensitivity,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Psoriasis,Acne,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Combination,Psoriasis,Wrinkles,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Oily,Psoriasis,Acne,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Normal,Psoriasis,Wrinkles,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Healthy,Redness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Dry,Acne,Sensitivity,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Normal,Acne,Oiliness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Oily,Eczema,Dark Spots,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Oily,Healthy,Sensitivity,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Normal,Rosacea,Sensitivity,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Psoriasis,Oiliness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Dry,Acne,Wrinkles,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Dry,Rosacea,Wrinkles,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Oily,Acne,Dryness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Dry,Eczema,Sensitivity,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Dry,Eczema,Wrinkles,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Acne,Dark Spots,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Oily,Rosacea,Wrinkles,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Oily,Eczema,Acne,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Combination,Psoriasis,Oiliness,WOW Skin Science Vitamin C Face Serum,https://example.com/products/wow-skin-science-vitamin-c-face-serum,https://example.com/images/wow-skin-science-vitamin-c-face-serum.jpg
+Normal,Healthy,Dark Spots,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Healthy,Redness,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Normal,Acne,Wrinkles,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Normal,Healthy,Dryness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Normal,Acne,Oiliness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Oily,Acne,Redness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Normal,Psoriasis,Dark Spots,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Normal,Rosacea,Sensitivity,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Combination,Eczema,Dark Spots,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Normal,Rosacea,Acne,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Dry,Healthy,Redness,Himalaya Neem Face Wash,https://example.com/products/himalaya-neem-face-wash,https://example.com/images/himalaya-neem-face-wash.jpg
+Combination,Rosacea,Oiliness,Forest Essentials Soundarya Radiance Cream,https://example.com/products/forest-essentials-soundarya-radiance-cream,https://example.com/images/forest-essentials-soundarya-radiance-cream.jpg
+Oily,Eczema,Redness,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Normal,Acne,Dark Spots,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Oily,Healthy,Acne,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg
+Oily,Psoriasis,Redness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Oily,Rosacea,Redness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Combination,Acne,Sensitivity,Derma Co 2% Salicylic Acid Face Serum,https://example.com/products/derma-co-2%-salicylic-acid-face-serum,https://example.com/images/derma-co-2%-salicylic-acid-face-serum.jpg
+Normal,Eczema,Wrinkles,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Combination,Acne,Dryness,Aroma Magic Aloe Vera Sunscreen,https://example.com/products/aroma-magic-aloe-vera-sunscreen,https://example.com/images/aroma-magic-aloe-vera-sunscreen.jpg
+Combination,Acne,Wrinkles,Mamaearth Ubtan Face Mask,https://example.com/products/mamaearth-ubtan-face-mask,https://example.com/images/mamaearth-ubtan-face-mask.jpg
+Combination,Eczema,Redness,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Combination,Rosacea,Dryness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Normal,Eczema,Acne,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Dry,Eczema,Wrinkles,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Oily,Healthy,Wrinkles,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Acne,Wrinkles,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Rosacea,Oiliness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Healthy,Wrinkles,Nivea Soft Light Moisturizer,https://example.com/products/nivea-soft-light-moisturizer,https://example.com/images/nivea-soft-light-moisturizer.jpg
+Oily,Eczema,Dark Spots,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Oily,Healthy,Oiliness,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Eczema,Acne,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Combination,Acne,Dryness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Combination,Psoriasis,Wrinkles,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Dry,Psoriasis,Oiliness,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Dry,Rosacea,Sensitivity,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Combination,Acne,Dryness,Mamaearth Tea Tree Face Wash,https://example.com/products/mamaearth-tea-tree-face-wash,https://example.com/images/mamaearth-tea-tree-face-wash.jpg
+Normal,Acne,Dryness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Combination,Psoriasis,Dark Spots,MCaffeine Coffee Face Scrub,https://example.com/products/mcaffeine-coffee-face-scrub,https://example.com/images/mcaffeine-coffee-face-scrub.jpg
+Oily,Acne,Dryness,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Dry,Psoriasis,Sensitivity,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Dry,Acne,Redness,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Combination,Psoriasis,Redness,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Combination,Healthy,Wrinkles,Biotique Bio Morning Nectar Moisturizer,https://example.com/products/biotique-bio-morning-nectar-moisturizer,https://example.com/images/biotique-bio-morning-nectar-moisturizer.jpg
+Oily,Rosacea,Dark Spots,VLCC Almond Honey Deep Nourishing Skin Cream,https://example.com/products/vlcc-almond-honey-deep-nourishing-skin-cream,https://example.com/images/vlcc-almond-honey-deep-nourishing-skin-cream.jpg
+Oily,Healthy,Acne,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Oily,Healthy,Oiliness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Healthy,Oiliness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Combination,Healthy,Wrinkles,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Oily,Eczema,Oiliness,Kaya Clinic Brightening Night Cream,https://example.com/products/kaya-clinic-brightening-night-cream,https://example.com/images/kaya-clinic-brightening-night-cream.jpg
+Combination,Psoriasis,Acne,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Combination,Healthy,Wrinkles,Plum Green Tea Mattifying Moisturizer,https://example.com/products/plum-green-tea-mattifying-moisturizer,https://example.com/images/plum-green-tea-mattifying-moisturizer.jpg
+Normal,Healthy,Dryness,Cetaphil Gentle Skin Cleanser,https://example.com/products/cetaphil-gentle-skin-cleanser,https://example.com/images/cetaphil-gentle-skin-cleanser.jpg
+Combination,Eczema,Dryness,Himalaya Moisturizing Aloe Vera Face Wash,https://example.com/products/himalaya-moisturizing-aloe-vera-face-wash,https://example.com/images/himalaya-moisturizing-aloe-vera-face-wash.jpg
+Normal,Healthy,Acne,Lotus Herbals WhiteGlow Night Cream,https://example.com/products/lotus-herbals-whiteglow-night-cream,https://example.com/images/lotus-herbals-whiteglow-night-cream.jpg
+Normal,Healthy,Dryness,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Oily,Psoriasis,Sensitivity,Neutrogena Hydro Boost Water Gel,https://example.com/products/neutrogena-hydro-boost-water-gel,https://example.com/images/neutrogena-hydro-boost-water-gel.jpg
+Combination,Eczema,Dark Spots,Lacto Calamine Oil Balance Lotion,https://example.com/products/lacto-calamine-oil-balance-lotion,https://example.com/images/lacto-calamine-oil-balance-lotion.jpg
+Combination,Psoriasis,Dryness,Lakme Absolute Perfect Radiance Cream,https://example.com/products/lakme-absolute-perfect-radiance-cream,https://example.com/images/lakme-absolute-perfect-radiance-cream.jpg
+Dry,Eczema,Dark Spots,Pond's Super Light Gel,https://example.com/products/pond's-super-light-gel,https://example.com/images/pond's-super-light-gel.jpg

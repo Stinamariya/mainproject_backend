@@ -1,87 +1,132 @@
 import pandas as pd
 import numpy as np
-import joblib
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-import os
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import classification_report
+import pickle
 
-# Load dataset
-df = pd.read_csv("realistic_skin_prediction_dataset.csv")  # Ensure this file exists
+def train_model():
+    # Load dataset
+    df = pd.read_csv("realistic_skin_prediction_dataset.csv")
+    
+    # Assume your dataset has two target columns: 'skin_type' and 'skin_condition'
+    # and other columns are features.
+    target_columns = ["Skin_Type", "Skin_Condition"]
+    feature_columns = [col for col in df.columns if col not in target_columns]
+    
+    # Encode categorical features in X (features)
+    le_dict = {}
+    for col in feature_columns:
+        if df[col].dtype == object:
+            le = LabelEncoder()
+            df[col] = le.fit_transform(df[col])
+            le_dict[col] = le
+            
+    # Encode target columns
+    le_target = {}
+    for col in target_columns:
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col])
+        le_target[col] = le
 
-# Strip whitespace from column names
-df.columns = df.columns.str.strip()
+    # Separate features and targets
+    X = df[feature_columns]
+    y = df[target_columns]
+    
+    # Split into training and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Create and train a multi-output Random Forest classifier
+    base_model = RandomForestClassifier(n_estimators=100, random_state=42)
+    multi_model = MultiOutputClassifier(base_model)
+    multi_model.fit(X_train, y_train)
+    
+    # Evaluate the model for each target
+    predictions = multi_model.predict(X_test)
+    for idx, col in enumerate(target_columns):
+        print(f"Classification report for {col}:")
+        print(classification_report(y_test[col], predictions[:, idx]))
+    
+    # Save the trained model, target encoders, feature encoders, and feature list
+    with open("skin_multi_model.pkl", "wb") as f:
+        pickle.dump((multi_model, le_target, le_dict, feature_columns), f)
+    
+    print("Multi-output model trained and saved as skin_multi_model.pkl")
+    return multi_model, le_target, le_dict, feature_columns
 
-# Handle missing values
-df = df.dropna()
+def load_model():
+    try:
+        with open("skin_multi_model.pkl", "rb") as f:
+            multi_model, le_target, le_dict, feature_columns = pickle.load(f)
+        return multi_model, le_target, le_dict, feature_columns
+    except FileNotFoundError:
+        print("Trained model not found. Training a new one...")
+        return train_model()
 
-# Identify categorical columns
-categorical_columns = [
-    'Gender', 'Water_Intake_Glasses', 'Diet_Quality', 'Sleep_Hours', 'Exercise_Frequency',
-    'Stress_Level', 'Sun_Exposure', 'Hydration_Level', 'Acne_History', 'Redness',
-    'Sensitivity_to_Products', 'Wrinkles_Fine_Lines', 'Dark_Spots'
-]
+def preprocess_input(formData, le_dict, feature_columns):
+    """
+    Convert the incoming formData (a dictionary) into a feature vector.
+    The formData should contain keys matching the feature_columns.
+    Categorical features are encoded using the provided label encoders.
+    """
+    features = []
+    for col in feature_columns:
+        val = formData.get(col)
+        # If the column was encoded (i.e. it's categorical), use the encoder
+        if col in le_dict:
+            try:
+                encoded_val = le_dict[col].transform([val])[0]
+                features.append(encoded_val)
+            except Exception as e:
+                print(f"Error encoding {col} with value {val}: {e}")
+                features.append(0)
+        else:
+            try:
+                features.append(float(val))
+            except Exception as e:
+                print(f"Error converting {col} with value {val} to float: {e}")
+                features.append(0.0)
+    return np.array([features])  # Return as a 2D array
 
-# Encode categorical features
-label_encoders = {}
-for col in categorical_columns:
-    le = LabelEncoder()
-    df[col] = le.fit_transform(df[col])
-    label_encoders[col] = le  # Save encoders for future use
+def predict(formData):
+    """
+    Predicts both skin type and skin condition from formData.
+    Returns a dictionary with keys 'skinType' and 'skinCondition'.
+    """
+    multi_model, le_target, le_dict, feature_columns = load_model()
+    features = preprocess_input(formData, le_dict, feature_columns)
+    prediction_encoded = multi_model.predict(features)[0]
+    
+    # Decode the predictions
+    Skin_Type = le_target["Skin_Type"].inverse_transform([prediction_encoded[0]])[0]
+    Skin_Condition = le_target["Skin_Condition"].inverse_transform([prediction_encoded[1]])[0]
+    
+    return {"skinType": Skin_Type, "skinCondition": Skin_Condition}
 
-# Define features (X) and target variables (y)
-X = df.drop(columns=['Skin_Type', 'Skin_Condition'])  # Features
-y_skin_type = df['Skin_Type']
-y_skin_condition = df['Skin_Condition']
+if __name__ == "__main__":
+    # Train the model (or load if already trained)
+    train_model()
+    
+    # Sample form data for prediction (adjust values to match your dataset)
+    sampleData = {
+    "Age": "30",
+    "Gender": "Female",
+    "Water_Intake_Glasses": "4",
+    "Diet_Quality": "Healthy",
+    "Sleep_Hours": "6",
+    "Exercise_Frequency": "Regularly",
+    "Stress_Level": "Medium",
+    "Sun_Exposure": "High",
+    "Hydration_Level": "Medium",
+    "Acne_History": "Yes",
+    "Redness": "No",
+    "Sensitivity_to_Products": "Yes",
+    "Wrinkles_Fine_Lines": "No",
+    "Dark_Spots": "Yes"
+}
 
-# Encode target variables
-le_skin_type = LabelEncoder()
-le_skin_condition = LabelEncoder()
-y_skin_type_encoded = le_skin_type.fit_transform(y_skin_type)
-y_skin_condition_encoded = le_skin_condition.fit_transform(y_skin_condition)
-
-# Standardize numerical features
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# Train-test split (same split for both models)
-X_train, X_test, y_train_type, y_test_type, y_train_condition, y_test_condition = train_test_split(
-    X_scaled, y_skin_type_encoded, y_skin_condition_encoded, test_size=0.2, random_state=42
-)
-
-# Train Random Forest models
-model_skin_type = RandomForestClassifier(n_estimators=100, random_state=42)
-model_skin_condition = RandomForestClassifier(n_estimators=100, random_state=42)
-
-model_skin_type.fit(X_train, y_train_type)
-model_skin_condition.fit(X_train, y_train_condition)
-
-# Make predictions
-y_pred_skin = model_skin_type.predict(X_test)
-y_pred_condition = model_skin_condition.predict(X_test)
-
-# Print evaluation metrics
-print(f"✅ Skin Type Prediction Accuracy: {accuracy_score(y_test_type, y_pred_skin):.2f}")
-print(f"✅ Skin Condition Prediction Accuracy: {accuracy_score(y_test_condition, y_pred_condition):.2f}")
-
-print("\n📊 Skin Type Classification Report:\n", classification_report(y_test_type, y_pred_skin))
-print("\n📊 Skin Condition Classification Report:\n", classification_report(y_test_condition, y_pred_condition))
-
-# Confusion matrix
-print("\n🔍 Skin Type Confusion Matrix:\n", confusion_matrix(y_test_type, y_pred_skin))
-print("\n🔍 Skin Condition Confusion Matrix:\n", confusion_matrix(y_test_condition, y_pred_condition))
-
-# Create 'models' directory if not exists
-models_dir = "flask_api/models"
-os.makedirs(models_dir, exist_ok=True)
-
-# Save models and encoders
-joblib.dump(model_skin_type, f"{models_dir}/skin_type_model.pkl")
-joblib.dump(model_skin_condition, f"{models_dir}/skin_condition_model.pkl")
-joblib.dump(le_skin_type, f"{models_dir}/skin_type_encoder.pkl")
-joblib.dump(le_skin_condition, f"{models_dir}/skin_condition_encoder.pkl")
-joblib.dump(label_encoders, f"{models_dir}/feature_encoders.pkl")
-joblib.dump(scaler, f"{models_dir}/scaler.pkl")
-
-print("✅ Models and encoders trained & saved successfully!")
+    
+    result = predict(sampleData)
+    print("Prediction result:", result)

@@ -1,439 +1,429 @@
-// require("dotenv").config();
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const bcrypt = require("bcryptjs");
-// const cors = require("cors");
-// const jwt = require("jsonwebtoken");
-// const fetch = require("node-fetch");
-// const morgan = require("morgan");
-// const { userModel } = require("./models/Users");
-// const auth = require("./middleware/auth");
-// const Prediction = require("./models/Prediction");
-// const Product = require("./models/Product");
-// const PredictionModel = require('./models/PredictionModel');
-// const { predictSkinType, predictSkinCondition } = require("./utils/prediction.js");
-// const { predictSkinTypeAndCondition } = require("./utils/prediction");
-
-
-
-
-
-
-
-// const app = express();
-
-// // Middleware
-// app.use(express.json());
-// app.use(cors({
-//     origin: "http://localhost:3000", // Allow frontend requests
-//     methods: ["GET", "POST"], // Allow specific methods
-//     allowedHeaders: ["Content-Type", "Authorization"] // Allow necessary headers
-//   }));
-  
-// app.use(morgan("dev"));
-
-
-// // MongoDB Connection
-// mongoose.connect("mongodb+srv://stina:stina2006@cluster0.rfrzosg.mongodb.net/skinCaredb?retryWrites=true&w=majority&appName=Cluster0")
-// .then(() => console.log("MongoDB connected"))
-// .catch(err => console.error(" MongoDB connection error: ", err));
-
-// // Signup API
-// app.post("/SignUp", async (req, res) => {
-//     console.log(" Signup request received:", req.body);
-
-//     const { username, email, password } = req.body;
-//     if (!username || !email || !password) {
-//         return res.status(400).json({ status: "error", message: "All fields are required" });
-//     }
-
-//     try {
-//         const existingUser = await userModel.findOne({ email });
-//         if (existingUser) {
-//             return res.status(400).json({ status: "error", message: "Email already exists" });
-//         }
-
-//         const hashedPassword = await bcrypt.hash(password, 10);
-//         const newUser = new userModel({ username, email, password: hashedPassword });
-//         await newUser.save();
-
-//         console.log("User registered:", username);
-//         res.status(201).json({ status: "success", message: "User registered successfully" });
-//     } catch (error) {
-//         console.error(" Signup Error:", error);
-//         res.status(500).json({ status: "error", message: "Server error. Please try again." });
-//     }
-// });
-
-// // Login API
-// app.post("/Login", async (req, res) => {
-//   console.log("🔹 Login request received:", req.body);
-
-//   const { email, password } = req.body;
-
-//   if (!email || !password) {
-//       return res.status(400).json({ status: "error", message: "All fields are required" });
-//   }
-
-//   try {
-//       // Find user by email
-//       const user = await userModel.findOne({ email });
-//       if (!user) {
-//           return res.status(401).json({ status: "error", message: "Invalid email or password" });
-//       }
-
-//       // Compare passwords
-//       const isMatch = await bcrypt.compare(password, user.password);
-//       if (!isMatch) {
-//           return res.status(401).json({ status: "error", message: "Invalid email or password" });
-//       }
-
-//       // Generate JWT token
-//       const token = jwt.sign(
-//           { userId: user._id, role: user.role },
-//           process.env.JWT_SECRET || "your_secret_key",
-//           { expiresIn: "1h" }
-//       );
-
-//       console.log(" Login successful for:", email);
-//       res.json({
-//           status: "success",
-//           message: "Login successful",
-//           token,
-//           userId: user._id,
-//           role: user.role,
-//           username: user.username
-//       });
-
-//   } catch (error) {
-//       console.error(" Login Error:", error);
-//       res.status(500).json({ status: "error", message: "Server error. Please try again." });
-//   }
-// });
-
-// // Prediction API (Express) - Integrate with Flask API
-// app.post("/predict", async (req, res) => {
-//     try {
-//         // Assuming Flask API is running on http://localhost:5000
-//         const flaskApiUrl = "http://127.0.0.1:5000/predict";
-//         const response = await fetch(flaskApiUrl, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify(req.body) // Send data to Flask API
-//         });
-
-//         const data = await response.json();
-
-//         if (data.error) {
-//             return res.status(500).json({ error: "Failed to process prediction." });
-//         }
-
-//         // Send response from Flask API back to client
-//         res.json({
-//             predictedSkinType: data.skinType,
-//             predictedSkinCondition: data.condition
-//         });
-
-//     } catch (error) {
-//         console.error("❌ Prediction Error:", error);
-//         res.status(500).json({ error: "Failed to process prediction." });
-//     }
-// });
-
-// // API to get recommended products based on skin type and concern
-// app.post("/recommend", async (req, res) => {
-//     const { skin_type, skin_condition } = req.body;
-  
-//     if (!skin_type || !skin_condition) {
-//       return res.status(400).json({ error: "Missing skin type or concern" });
-//     }
-  
-//     try {
-//       // Fetch products from MongoDB that match the skin type and concern
-//       const recommendedProducts = await Product.find({
-//         "Skin type": skin_type,
-//         Concern: skin_condition,
-//       });
-  
-//       res.json({
-//         recommended_products: recommendedProducts,
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: "An error occurred while fetching products" });
-//     }
-//   });
-  
-//   // Routes for products
-// app.get('/api/products', async (req, res) => {
-//     try {
-//       const products = await Product.find();
-//       res.json(products);
-//     } catch (err) {
-//       res.status(500).send('Server error');
-//     }
-//   });
-  
-//   // Route for creating an order
-//   app.post('/api/orders', async (req, res) => {
-//     try {
-//       const { products, userId, totalPrice } = req.body;
-//       const newOrder = new Order({ products, userId, totalPrice });
-//       await newOrder.save();
-//       res.json(newOrder);
-//     } catch (err) {
-//       res.status(500).send('Server error');
-//     }
-//   });
-
-
-
-  
-//   // Start Server
-//   const PORT = 5000;
-// // Start Server
-// app.listen(3031, () => console.log(" Server started"));
-
-
-
-
-
-
-
-
-
-
-
-
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const fetch = require("node-fetch");
 const morgan = require("morgan");
-const { userModel } = require("./models/Users");
-const auth = require("./middleware/auth");
-const Prediction = require("./models/Prediction");
-const Product = require("./models/Product");
-const PredictionModel = require('./models/PredictionModel');
-const { predictSkinType, predictSkinCondition } = require("./utils/prediction.js");
-const { predictSkinTypeAndCondition } = require("./utils/prediction");
+const axios = require("axios");
+const fs = require("fs");
+const csv = require("csv-parser");
 
 
 
 
 
+
+const userModel = require('./models/Users');  // No destructuring needed
+
+const Product = require("./models/product");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Admin = require('./models/Admin');
 
 
 const app = express();
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
+
+
+
+
+
+// Allow DELETE method in CORS settings
 app.use(cors({
-    origin: "http://localhost:3000", // Allow frontend requests
-    methods: ["GET", "POST"], // Allow specific methods
-    allowedHeaders: ["Content-Type", "Authorization"] // Allow necessary headers
-  }));
-  
+    origin: "http://localhost:3000", // Adjust if frontend is deployed elsewhere
+    methods: ["GET", "POST", "PUT", "DELETE"], // Ensure DELETE is included
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+
 app.use(morgan("dev"));
 
+// 🔐 Secure JWT Secret Key
+const JWT_SECRET = process.env.JWT_SECRET || "my_super_secret_key"; // Use environment variables in production
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://stina:stina2006@cluster0.rfrzosg.mongodb.net/skinCaredb?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error(" MongoDB connection error: ", err));
 
-// Signup API
-app.post("/SignUp", async (req, res) => {
-    console.log(" Signup request received:", req.body);
 
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
-        return res.status(400).json({ status: "error", message: "All fields are required" });
+
+
+// ====================================================
+// ✅ COMMON AUTH MIDDLEWARE FOR USERS & ADMINS
+// ====================================================
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ status: "No token provided" });
+  }
+
+  jwt.verify(token, "skinapp", (err, user) => {
+    if (err) {
+      console.error('Token verification error:', err); // Log the error for debugging
+      return res.status(403).json({ status: "Invalid Authentication" });
+    }
+    if (!user._id) {
+      console.error('No user ID in token:', user); // Check if user._id is missing
+      return res.status(403).json({ status: "Invalid Authentication: No user ID found" });
     }
 
+    req.user = user; // Attach the user info to the request object
+    next(); // Call next to pass control to the next middleware
+  });
+};
+
+module.exports = authenticateToken;
+
+// ====================================================
+// ✅ USER AUTHENTICATION
+// ====================================================
+
+
+// Signup API
+
+
+app.post("/Signup", async (req, res) => {
     try {
-        const existingUser = await userModel.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ status: "error", message: "Email already exists" });
+      const { username, email, password, role } = req.body;
+
+      // Check if it's an admin role and use the correct model for saving
+      if (role === 'admin') {
+        const existingAdmin = await Admin.findOne({ email });
+        if (existingAdmin) {
+          return res.status(400).json({ message: 'Admin email already exists' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new userModel({ username, email, password: hashedPassword });
-        await newUser.save();
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        const newAdmin = new Admin({ username, email, password: hashedPassword, role });
 
-        console.log("User registered:", username);
-        res.status(201).json({ status: "success", message: "User registered successfully" });
+        // Save the admin in the 'admins' collection
+        const savedAdmin = await newAdmin.save();
+
+        // Generate token using the saved admin data
+        const token = jwt.sign({ _id: savedAdmin._id, role: savedAdmin.role }, "skinapp", { expiresIn: "1d" });
+
+        // Respond with the token
+        return res.status(201).json({ token, role: savedAdmin.role });
+      }
+
+      // For normal users, handle using userModel (if this is required as well)
+      const existingUser = await userModel.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Email already exists' });
+      }
+
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const newUser = new userModel({ username, email, password: hashedPassword, role });
+
+      // Save the user in the database
+      const savedUser = await newUser.save();
+
+      // Generate token using the saved user data
+      const token = jwt.sign({ _id: savedUser._id, role: savedUser.role }, "skinapp", { expiresIn: "1d" });
+
+      // Respond with the token
+      return res.status(201).json({ token, role: savedUser.role });
+
     } catch (error) {
-        console.error(" Signup Error:", error);
-        res.status(500).json({ status: "error", message: "Server error. Please try again." });
+      console.error('Signup error:', error.message);
+      res.status(500).json({ message: 'Server error during signup' });
     }
 });
 
-// Login API
-app.post("/Login", async (req, res) => {
-  console.log("🔹 Login request received:", req.body);
+  
+  // User Login Route
+  app.post("/login", async (req, res) => {
+    try {
+      const user = await userModel.findOne({ email: req.body.email });
 
-  const { email, password } = req.body;
+      if (!user) return res.status(400).json({ status: "Invalid Email Id" });
+  
+      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+      if (!passwordIsValid) return res.status(400).json({ status: "Incorrect Password" });
+  
+      const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET || 'skinapp', { expiresIn: "1d" });
+      
+      res.json({
+        status: "success",
+        token,
+        role: user.role,
+        userId: user._id,
+        username: user.username,
+      });
+    } catch (error) {
+      console.error('Error during login:', error.message);
+      res.status(500).json({ status: "error", errorMessage: error.message });
+    }
+  });
+  
 
-  if (!email || !password) {
-      return res.status(400).json({ status: "error", message: "All fields are required" });
-  }
+  // Models
+
+
+const Order = mongoose.model("Order", new mongoose.Schema({ userId: String, products: Array }));
+
+// Middleware to Verify Admin
+const verifyAdmin = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-      // Find user by email
-      const user = await userModel.findOne({ email });
-      if (!user) {
-          return res.status(401).json({ status: "error", message: "Invalid email or password" });
-      }
-
-      // Compare passwords
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-          return res.status(401).json({ status: "error", message: "Invalid email or password" });
-      }
-
-      // Generate JWT token
-      const token = jwt.sign(
-          { userId: user._id, role: user.role },
-          process.env.JWT_SECRET || "your_secret_key",
-          { expiresIn: "1h" }
-      );
-
-      console.log(" Login successful for:", email);
-      res.json({
-          status: "success",
-          message: "Login successful",
-          token,
-          userId: user._id,
-          role: user.role,
-          username: user.username
-      });
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.role !== "admin") return res.status(403).json({ message: "Forbidden" });
+    req.adminId = decoded.id;
+    next();
   } catch (error) {
-      console.error(" Login Error:", error);
-      res.status(500).json({ status: "error", message: "Server error. Please try again." });
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+  
+  
+  // Admin creation route
+  app.post("/create-admin", async (req, res) => {
+    try {
+      const { email, username, password } = req.body;
+  
+      const existingAdmin = await Admin.findOne({ email });
+      if (existingAdmin) {
+        return res.status(400).json({ status: "Admin already exists" });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newAdmin = new Admin({ email, username, password: hashedPassword });
+  
+      // Save the new admin to the database and log the result
+      await newAdmin.save()
+        .then(admin => {
+          console.log("Admin saved successfully:", admin);  // Log the saved admin data
+          res.status(201).json({ status: "Admin created successfully", email: admin.email });
+        })
+        .catch(error => {
+          console.error("Error saving admin:", error.message);  // Log any error during saving
+          res.status(500).json({ status: "error", errorMessage: error.message });
+        });
+  
+    } catch (error) {
+      console.error('Error creating admin:', error.message);
+      res.status(500).json({ status: "error", errorMessage: error.message });
+    }
+  });
+  
+  
+  
+
+// Admin Login Route
+app.post("/admin-login", async (req, res) => {
+  try {
+    console.log('Login request received:', req.body);  // Log the incoming login request
+
+    const { email, password } = req.body;
+
+    const user = await Admin.findOne({ email });
+    if (!user) {
+      console.log('Admin not found for email:', email); // Log if no user found
+      return res.status(400).json({ status: "Invalid Email Id" });
+    }
+
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+    if (!passwordIsValid) {
+      console.log('Incorrect password for user:', email); // Log incorrect password attempts
+      return res.status(400).json({ status: "Incorrect Password" });
+    }
+
+    const token = jwt.sign({ _id: user._id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
+
+    res.json({
+      status: "success",
+      token,
+      role: user.role,
+      userId: user._id,
+      username: user.username,
+    });
+  } catch (error) {
+    console.error('Error during login:', error.message);
+    res.status(500).json({ status: "error", errorMessage: error.message });
   }
 });
 
-// Prediction API (Connects to Flask)
-app.post("/predict", async (req, res) => {
+// Get Users
+app.get("/admin/users", verifyAdmin, async (req, res) => {
+  const users = await userModel.find({}, "username email");  // ✅ Correct
+
+  res.json(users);
+});
+
+// Get Products
+app.get("/admin/products", verifyAdmin, async (req, res) => {
+  const products = await Product.find();
+  res.json(products);
+});
+
+// Add Product
+app.post("/admin/products", verifyAdmin, async (req, res) => {
   try {
-      const flaskApiUrl = "http://127.0.0.1:5000/predict";
-      const response = await fetch(flaskApiUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(req.body)
-      });
+    const { skinType, productName, concern, productURL, imageURL } = req.body;
 
-      const data = await response.json();
-      if (data.error) return res.status(500).json({ error: data.error });
+    // Validate required fields
+    if (!skinType || !productName || !concern || !productURL || !imageURL) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
-      res.json({
-          predictedSkinType: data.skin_type,
-          predictedSkinCondition: data.skin_condition
-      });
+    // Create a new product instance
+    const newProduct = new Product({
+      skinType,
+      productName,
+      concern,
+      productURL,
+      imageURL,
+    });
 
+    // Save product to MongoDB
+    const savedProduct = await newProduct.save();
+
+    res.status(201).json({ message: "Product added successfully", product: savedProduct });
   } catch (error) {
-      console.error("Prediction Error:", error);
-      res.status(500).json({ error: "Prediction failed" });
+    console.error("Error adding product:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-// Recommendation API
-app.post('/recommend', async (req, res) => {
-const { skin_type, concern } = req.body;
-try {
-  const recommendedProducts = await Product.find({ skin_type, concern });
-  res.json({ recommended_products: recommendedProducts });
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ error: "Error fetching products" });
+
+// Update Product
+app.put("/admin/products/:id", verifyAdmin, async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },  // Ensures only provided fields are updated
+      { new: true, runValidators: true }  // Returns updated product & validates input
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product updated", product: updatedProduct });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+//delete product
+app.delete("/admin/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Debugging: Log the received ID
+    console.log("Deleting product with ID:", id);
+
+    // Ensure Product model is properly imported
+    const Product = require("./models/product"); 
+
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+// Get Orders
+app.get("/admin/orders", verifyAdmin, async (req, res) => {
+  const orders = await Order.find();
+  res.json(orders);
+});
+
+app.get('/user-dashboard', async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.userId });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+
+app.post("/predict-skin", async (req, res) => {
+  try {
+    console.log("Received request from frontend:", req.body); // Debug log
+
+    const response = await axios.post("http://localhost:5000/predict-skin", req.body);
+    
+    console.log("Response from Flask API:", response.data); // Debug log
+
+    const recommendations = await getRecommendations(response.data);
+
+    res.json({
+      ...response.data,
+      recommendedProducts: recommendations
+    });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+});
+
+
+async function getRecommendations(prediction) {
+  try {
+    const { skinType, skinCondition } = prediction;
+
+    console.log("Searching products for Skin Type:", skinType, "and Concern:", skinCondition);
+
+    const recommendedProducts = await Product.find({
+      $or: [
+        { skinType: skinType },
+        { concern: skinCondition }
+      ]
+    });
+
+    console.log("Fetched Products:", recommendedProducts); // Debugging
+
+    return recommendedProducts.length > 0 ? recommendedProducts : []; // Ensure an array is returned
+  } catch (error) {
+    console.error("Error fetching recommendations:", error.message);
+    return []; // Return an empty array in case of an error
+  }
 }
-});
 
 
 
 
 
+  
+// ====================================================
+// ✅ Default Route
+// ====================================================
+app.get("/", (req, res) => res.send("✅ API Running..."));
 
+// ✅ Start Server
+const PORT = process.env.PORT || 3031;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
-
-
-// Get all products
-app.get("/", async (req, res) => {
-  try {
-      const products = await Product.find();
-      res.json(products);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-
-// Add to cart
-app.post("/add", async (req, res) => {
-  const { userId, productId, name, price, quantity, image } = req.body;
-
-  try {
-      let cart = await Cart.findOne({ userId });
-
-      if (!cart) {
-          cart = new Cart({ userId, products: [] });
-      }
-
-      const productIndex = cart.products.findIndex(p => p.productId === productId);
-
-      if (productIndex > -1) {
-          cart.products[productIndex].quantity += quantity;
-      } else {
-          cart.products.push({ productId, name, price, quantity, image });
-      }
-
-      await cart.save();
-      res.json(cart);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-
-// Get user cart
-app.get("/:userId", async (req, res) => {
-  try {
-      const cart = await Cart.findOne({ userId: req.params.userId });
-      res.json(cart);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-// Create order
-app.post("/create", async (req, res) => {
-  const { userId, products, totalAmount } = req.body;
-
-  try {
-      const order = new Order({ userId, products, totalAmount });
-      await order.save();
-      res.json(order);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-
-// Get user orders
-app.get("/:userId", async (req, res) => {
-  try {
-      const orders = await Order.find({ userId: req.params.userId });
-      res.json(orders);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});

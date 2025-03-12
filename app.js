@@ -279,10 +279,10 @@ app.get("/admin/products", verifyAdmin, async (req, res) => {
 // Add Product
 app.post("/admin/products", verifyAdmin, async (req, res) => {
   try {
-    const { skinType, productName, concern, productURL, imageURL } = req.body;
+    const { skinType, productName, concern, productURL, imageURL, price } = req.body;
 
     // Validate required fields
-    if (!skinType || !productName || !concern || !productURL || !imageURL) {
+    if (!skinType || !productName || !concern || !productURL || !imageURL || !price) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -293,6 +293,7 @@ app.post("/admin/products", verifyAdmin, async (req, res) => {
       concern,
       productURL,
       imageURL,
+      price
     });
 
     // Save product to MongoDB
@@ -306,13 +307,23 @@ app.post("/admin/products", verifyAdmin, async (req, res) => {
 });
 
 
-// Update Product
 app.put("/admin/products/:id", verifyAdmin, async (req, res) => {
   try {
+    const { skinType, productName, concern, productURL, imageURL, price } = req.body;
+
+    // Construct the update object with only allowed fields
+    const updateFields = {};
+    if (skinType !== undefined) updateFields.skinType = skinType;
+    if (productName !== undefined) updateFields.productName = productName;
+    if (concern !== undefined) updateFields.concern = concern;
+    if (productURL !== undefined) updateFields.productURL = productURL;
+    if (imageURL !== undefined) updateFields.imageURL = imageURL;
+    if (price !== undefined) updateFields.price = price;
+
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },  // Ensures only provided fields are updated
-      { new: true, runValidators: true }  // Returns updated product & validates input
+      { $set: updateFields }, // Update only selected fields
+      { new: true, runValidators: true } // Return updated product & validate input
     );
 
     if (!updatedProduct) {
@@ -415,6 +426,29 @@ async function getRecommendations(prediction) {
 
 
 
+// Fetch all products
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Fetch products based on skin type & concern
+app.get("/api/products/recommend", async (req, res) => {
+  const { skinType, concern } = req.query;
+  try {
+    const products = await Product.find({
+      skinType: { $in: [skinType] },
+      concern: { $in: [concern] },
+    });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 
   

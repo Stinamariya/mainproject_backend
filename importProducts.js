@@ -19,29 +19,33 @@ mongoose
 async function importCSV() {
   try {
     const products = [];
-    fs.createReadStream("skinproduct.csv")
-      .pipe(csv())
-      .on("data", (data) => {
-        products.push({
-          skinType: data["Skin type"],
-          productName: data["Product"],
-          concern: data["Concern"],
-          productUrl: data["product_url"],
-          productPic: data["product_pic"]
-        });
-      })
-      .on("end", async () => {
-        try {
-          await Product.insertMany(products);
-          console.log(`✅ Imported ${products.length} products.`);
-          mongoose.connection.close();
-        } catch (err) {
-          console.error("❌ Error inserting products:", err);
-        }
-      })
-      .on("error", (err) => {
-        console.error("❌ Error reading CSV:", err);
-      });
+    fs.createReadStream("skinproductdata.csv")
+  .pipe(csv())
+  .on("data", (data) => {
+    products.push({
+      skinType: data["Skin type"],
+      productName: data["Product"],
+      concern: data["Concern"],
+      productUrl: data["product_url"],
+      productPic: data["product_pic"],
+      price: parseFloat(data["Price"].replace('$', '').trim()),  // Remove '$' and convert to number
+      stock: data["Stock"] || 0,  // Ensure stock is available, if needed
+      description: data["Description"] || "No description available",  // Ensure description is handled
+    });
+  })
+  .on("end", async () => {
+    try {
+      await Product.insertMany(products);
+      console.log(`✅ Imported ${products.length} products.`);
+      mongoose.connection.close();
+    } catch (err) {
+      console.error("❌ Error inserting products:", err);
+    }
+  })
+  .on("error", (err) => {
+    console.error("❌ Error reading CSV:", err);
+  });
+
   } catch (err) {
     console.error("❌ Error in importCSV:", err);
   }

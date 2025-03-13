@@ -14,7 +14,7 @@ const csv = require("csv-parser");
 
 
 
-const userModel = require('./models/Users');  // No destructuring needed
+const User = require("./models/Users"); // Ensure correct path
 
 const Product = require("./models/product");
 
@@ -125,13 +125,13 @@ app.post("/Signup", async (req, res) => {
       }
 
       // For normal users, handle using userModel (if this is required as well)
-      const existingUser = await userModel.findOne({ email });
+      const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: 'Email already exists' });
       }
 
       const hashedPassword = bcrypt.hashSync(password, 10);
-      const newUser = new userModel({ username, email, password: hashedPassword, role });
+      const newUser = new User({ username, email, password: hashedPassword, role });
 
       // Save the user in the database
       const savedUser = await newUser.save();
@@ -152,7 +152,7 @@ app.post("/Signup", async (req, res) => {
   // User Login Route
   app.post("/login", async (req, res) => {
     try {
-      const user = await userModel.findOne({ email: req.body.email });
+      const user = await User.findOne({ email: req.body.email });
 
       if (!user) return res.status(400).json({ status: "Invalid Email Id" });
   
@@ -264,47 +264,99 @@ app.post("/admin-login", async (req, res) => {
 });
 
 // Get Users
-app.get("/admin/users", verifyAdmin, async (req, res) => {
-  const users = await userModel.find({}, "username email");  // ✅ Correct
-
-  res.json(users);
-});
-
-// Get Products
-app.get("/admin/products", verifyAdmin, async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
-});
-
-// Add Product
-app.post("/admin/products", verifyAdmin, async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
-    const { skinType, productName, concern, productURL, imageURL, price } = req.body;
-
-    // Validate required fields
-    if (!skinType || !productName || !concern || !productURL || !imageURL || !price) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    // Create a new product instance
-    const newProduct = new Product({
-      skinType,
-      productName,
-      concern,
-      productURL,
-      imageURL,
-      price
-    });
-
-    // Save product to MongoDB
-    const savedProduct = await newProduct.save();
-
-    res.status(201).json({ message: "Product added successfully", product: savedProduct });
+    const users = await User.find();
+    console.log("Users Sent to Frontend:", users); // Debugging
+    res.status(200).json(users);
   } catch (error) {
-    console.error("Error adding product:", error);
+    console.error("Error fetching users:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+app.delete("/api/users/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await User.findByIdAndDelete(userId);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete user" });
+  }
+});
+
+
+// GET all orders
+app.get("/api/orders", async (req, res) => {
+  try {
+    const orders = await Order.find();
+    console.log("Orders Sent to Frontend:", orders); // Debugging
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+// ✅ POST - Add new product
+app.post("/api/products", async (req, res) => {
+  try {
+      const { skinType, productName, concern, productUrl, productPic, price } = req.body;
+
+      if (!skinType || !productName || !concern || !productUrl || !productPic || !price) {
+          return res.status(400).json({ message: "All fields are required!" });
+      }
+
+      const newProduct = new Product({
+          skinType,
+          productName,
+          concern,
+          productUrl,
+          productPic,
+          price,
+      });
+
+      await newProduct.save();
+      res.status(201).json({ message: "Product added successfully!", product: newProduct });
+  } catch (error) {
+      console.error("Error adding product:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+// ✅ GET Route to Fetch Products
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    console.log("Products Sent to Frontend:", products); // Debugging
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+// Update a product
+app.put("/api/products/:id", async (req, res) => {
+  try {
+      const { id } = req.params;
+      const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
+      
+
+      if (!updatedProduct) {
+          return res.status(404).json({ message: "Product not found" });
+      }
+
+      res.json(updatedProduct);
+  } catch (error) {
+      console.error("Error updating product:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 
 app.put("/admin/products/:id", verifyAdmin, async (req, res) => {
@@ -338,46 +390,32 @@ app.put("/admin/products/:id", verifyAdmin, async (req, res) => {
 });
 
 
-//delete product
-app.delete("/admin/products/:id", async (req, res) => {
+// Delete a product
+app.delete("/api/products/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    
-    // Debugging: Log the received ID
-    console.log("Deleting product with ID:", id);
-
-    // Ensure Product model is properly imported
-    const Product = require("./models/product"); 
-
-    const deletedProduct = await Product.findByIdAndDelete(id);
-
-    if (!deletedProduct) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
+    await Product.findByIdAndDelete(req.params.id);
     res.json({ message: "Product deleted successfully" });
   } catch (error) {
-    console.error("Error deleting product:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Error deleting product", error });
   }
 });
 
 
 
-// Get Orders
-app.get("/admin/orders", verifyAdmin, async (req, res) => {
-  const orders = await Order.find();
-  res.json(orders);
-});
-
-app.get('/user-dashboard', async (req, res) => {
+app.get("/admin/orders", async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.userId });
-    res.json(user);
+      // Fetch all orders and populate user and product details
+      const orders = await Order.find()
+          .populate("userId", "username email") // Get user details
+          .populate("cart.productId", "name price imageURL"); // Get product details
+
+      res.json({ status: "success", orders });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+      res.status(500).json({ error: "Error fetching orders" });
   }
 });
+
+
 
 
 
@@ -450,6 +488,24 @@ app.get("/api/products/recommend", async (req, res) => {
   }
 });
 
+app.post("/api/orders", async (req, res) => {
+  try {
+    const { userId, items, totalAmount } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const newOrder = new Order({ userId, items, totalAmount });
+    await newOrder.save();
+
+    res.status(201).json({ message: "Order created successfully", order: newOrder });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
   
 // ====================================================
@@ -460,4 +516,3 @@ app.get("/", (req, res) => res.send("✅ API Running..."));
 // ✅ Start Server
 const PORT = process.env.PORT || 3031;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-

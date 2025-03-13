@@ -8,15 +8,15 @@ from sklearn.metrics import classification_report
 import pickle
 
 def train_model():
-    # Load dataset
+
     df = pd.read_csv("realistic_skin_prediction_dataset.csv")
     
-    # Assume your dataset has two target columns: 'skin_type' and 'skin_condition'
-    # and other columns are features.
+    
+    
     target_columns = ["Skin_Type", "Skin_Condition"]
     feature_columns = [col for col in df.columns if col not in target_columns]
     
-    # Encode categorical features in X (features)
+    
     le_dict = {}
     for col in feature_columns:
         if df[col].dtype == object:
@@ -24,32 +24,32 @@ def train_model():
             df[col] = le.fit_transform(df[col])
             le_dict[col] = le
             
-    # Encode target columns
+    
     le_target = {}
     for col in target_columns:
         le = LabelEncoder()
         df[col] = le.fit_transform(df[col])
         le_target[col] = le
 
-    # Separate features and targets
+    
     X = df[feature_columns]
     y = df[target_columns]
     
-    # Split into training and test sets
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Create and train a multi-output Random Forest classifier
+    
     base_model = RandomForestClassifier(n_estimators=100, random_state=42)
     multi_model = MultiOutputClassifier(base_model)
     multi_model.fit(X_train, y_train)
     
-    # Evaluate the model for each target
+    
     predictions = multi_model.predict(X_test)
     for idx, col in enumerate(target_columns):
         print(f"Classification report for {col}:")
         print(classification_report(y_test[col], predictions[:, idx]))
     
-    # Save the trained model, target encoders, feature encoders, and feature list
+    
     with open("skin_multi_model.pkl", "wb") as f:
         pickle.dump((multi_model, le_target, le_dict, feature_columns), f)
     
@@ -74,7 +74,7 @@ def preprocess_input(formData, le_dict, feature_columns):
     features = []
     for col in feature_columns:
         val = formData.get(col)
-        # If the column was encoded (i.e. it's categorical), use the encoder
+        
         if col in le_dict:
             try:
                 encoded_val = le_dict[col].transform([val])[0]
@@ -88,7 +88,7 @@ def preprocess_input(formData, le_dict, feature_columns):
             except Exception as e:
                 print(f"Error converting {col} with value {val} to float: {e}")
                 features.append(0.0)
-    return np.array([features])  # Return as a 2D array
+    return np.array([features])  
 
 def predict(formData):
     """
@@ -99,17 +99,17 @@ def predict(formData):
     features = preprocess_input(formData, le_dict, feature_columns)
     prediction_encoded = multi_model.predict(features)[0]
     
-    # Decode the predictions
+    
     Skin_Type = le_target["Skin_Type"].inverse_transform([prediction_encoded[0]])[0]
     Skin_Condition = le_target["Skin_Condition"].inverse_transform([prediction_encoded[1]])[0]
     
     return {"skinType": Skin_Type, "skinCondition": Skin_Condition}
 
 if __name__ == "__main__":
-    # Train the model (or load if already trained)
+   
     train_model()
     
-    # Sample form data for prediction (adjust values to match your dataset)
+    
     sampleData = {
     "Age": "30",
     "Gender": "Female",

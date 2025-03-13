@@ -7,17 +7,10 @@ const productSchema = new mongoose.Schema({
   productUrl: String,
   productPic: String,
   price: {
-    type: Number,  // Ensure it's a Number type
-    required: true, // You can remove 'required' if it's optional
+    type: Number,  
+    required: true, 
   },
-  // stock: {
-  //   type: Number,
-  //   required: true,
-  // },
-  // description: {
-  //   type: String,
-  //   required: true,
-  // },
+  
 });
 
 const Product = mongoose.model('Product', productSchema);

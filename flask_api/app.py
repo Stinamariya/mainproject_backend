@@ -1,49 +1,4 @@
-# from flask import Flask, request, jsonify
-# import pickle
-# import numpy as np
 
-# app = Flask(__name__)
-
-# # Load the trained model, target encoders, and feature information
-# with open("skin_multi_model.pkl", "rb") as f:
-#     multi_model, le_target, le_dict, feature_columns = pickle.load(f)
-
-# def preprocess_input(formData, le_dict, feature_columns):
-#     features = []
-#     for col in feature_columns:
-#         val = formData.get(col)
-#         if col in le_dict:
-#             try:
-#                 encoded_val = le_dict[col].transform([val])[0]
-#                 features.append(encoded_val)
-#             except Exception as e:
-#                 print(f"Error encoding {col} with value {val}: {e}")
-#                 features.append(0)
-#         else:
-#             try:
-#                 features.append(float(val))
-#             except Exception as e:
-#                 print(f"Error converting {col} with value {val} to float: {e}")
-#                 features.append(0.0)
-#     return np.array([features])
-
-# @app.route("/predict-skin", methods=["POST"])
-# def predict_skin():
-#     formData = request.json
-#     features = preprocess_input(formData, le_dict, feature_columns)
-#     prediction_encoded = multi_model.predict(features)[0]
-    
-#     # Decode predictions
-#     skin_type = le_target["Skin_Type"].inverse_transform([prediction_encoded[0]])[0]
-#     skin_condition = le_target["Skin_Condition"].inverse_transform([prediction_encoded[1]])[0]
-    
-#     return jsonify({
-#         "skinType": skin_type,
-#         "skinCondition": skin_condition
-#     })
-
-# if __name__ == "__main__":
-#     app.run(port=5000, debug=True)
 
 
 
@@ -121,3 +76,12 @@ def predict_skin():
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
+
+
+
+
+
+
+
+
+

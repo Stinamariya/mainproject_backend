@@ -26,7 +26,7 @@ app.use(express.json());
 
 // Allow DELETE method in CORS settings
 app.use(cors({
-    origin: "http://localhost:3001", // Adjust if frontend is deployed elsewhere
+    origin: "http://localhost:3000", // Adjust if frontend is deployed elsewhere
     methods: ["GET", "POST", "PUT", "DELETE"], // Ensure DELETE is included
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -325,14 +325,64 @@ app.post("/api/place-order", async (req, res) => {
 });
 
 // 📌 Fetch User Orders
-app.get("/api/orders/:userId", async (req, res) => {
+// app.get("/api/orders/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const orders = await Order.find({ userId }); // Fetch orders from DB
+
+//     if (!orders || orders.length === 0) {
+//       return res.status(200).json({ orders: [] }); // Return empty array instead of null
+//     }
+
+//     res.status(200).json({ orders });
+//   } catch (error) {
+//     console.error("Error fetching orders:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+
+
+
+// Fetch the latest order for a user
+app.get("/api/orders/latest/:userId", async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId });
-    res.status(200).json(orders);
+    const { userId } = req.params;
+    const latestOrder = await Order.findOne({ userId }).sort({ createdAt: -1 }); // Fetch the latest order
+
+    if (!latestOrder) {
+      return res.status(200).json({ order: null }); // Return null if no order is found
+    }
+
+    res.status(200).json({ order: latestOrder });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch orders" });
+    console.error("Error fetching order:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+// 📌 Fetch User Orders
+// Backend Route (Ensure this is correctly defined)
+app.get("/api/orders/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const orders = await Order.find({ userId }); // Fetch orders from DB for the specific user
+
+    if (!orders || orders.length === 0) {
+      return res.status(200).json({ orders: [] }); // Return empty array if no orders are found
+    }
+
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
 
 // ✅ Middleware for authentication
 const authenticateUser = (req, res, next) => {
@@ -622,32 +672,66 @@ app.delete("/api/users/:id", async (req, res) => {
 // Get all orders
 app.get("/api/orders", async (req, res) => {
   try {
-    const orders = await Order.find().populate("user").populate("products");
+    const orders = await Order.find()
+      .populate("userId", "username email")
+      .populate("products.productId", "name price");
+
+    console.log(orders); // Log orders to inspect the populated result
+
+    if (!orders) {
+      return res.status(404).json({ message: "No orders found" });
+    }
+
     res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ message: "Error fetching orders", error: error.message });
   }
 });
 
-// Update order status
+//update order status
 app.put("/api/orders/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
   try {
-    await Order.findByIdAndUpdate(req.params.id, { status: req.body.status });
-    res.json({ message: "Order status updated" });
+    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+    if (!order) {
+      return res.status(404).send("Order not found");
+    }
+    res.json(order);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Error updating order status", error });
   }
 });
 
-// Delete an order
+//delete order
 app.delete("/api/orders/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    await Order.findByIdAndDelete(req.params.id);
-    res.json({ message: "Order deleted successfully" });
+    const order = await Order.findByIdAndDelete(id);
+    if (!order) {
+      return res.status(404).send("Order not found");
+    }
+    res.json({ message: "Order deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Error deleting order", error });
   }
 });
+
+
+// Get orders for a specific user
+app.get("/api/orders/:userId", async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.params.userId });
+    console.log("Fetched Orders:", orders); // Debugging
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("❌ Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+
 
 
 
@@ -713,12 +797,16 @@ const authMiddleware = (req, res, next) => {
 
 
 
-// Get Orders by User ID (GET /api/orders/:userId)
+// ✅ GET Orders by User ID
 app.get("/api/orders/:userId", authMiddleware, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const orders = await Order.find({ user: userId }).sort({ orderDate: -1 });
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
 
     if (!orders || orders.length === 0) {
       return res.status(404).json({ message: "No orders found for this user" });
@@ -726,10 +814,67 @@ app.get("/api/orders/:userId", authMiddleware, async (req, res) => {
 
     res.json(orders);
   } catch (error) {
-    console.error("Error fetching orders:", error);
+    console.error("❌ Error fetching orders:", error.message);
     res.status(500).json({ error: "Server error" });
   }
 });
+
+
+
+app.post("/api/orders", async (req, res) => {
+  try {
+    console.log("Received order:", req.body);  // Debug input data
+
+    const { userId, name, phone, address, paymentMethod, products, totalPrice } = req.body;
+
+    // Check for missing fields
+    if (!userId || !name || !phone || !address || !paymentMethod || !products || totalPrice === undefined) {
+      console.log("❌ Missing required fields");
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Save order
+    const newOrder = new Order({
+      userId,
+      name,
+      phone,
+      address,
+      paymentMethod,
+      products,
+      totalPrice,
+      paymentStatus: "Paid",
+    });
+
+    await newOrder.save();
+    console.log("✅ Order saved:", newOrder);
+
+    res.status(201).json({ message: "Order placed successfully", order: newOrder });
+  } catch (error) {
+    console.error("❌ Order creation failed:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Start the server
 app.listen(3031, () => {

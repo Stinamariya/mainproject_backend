@@ -14,6 +14,7 @@ const Product = require("./models/product");
 const Admin = require('./models/Admin');
 const Questionnaire = require('./models/Questionnaire'); 
 const Review = require("./models/Review"); 
+const Feedback = require('./models/Feedback');
 
 
 
@@ -203,40 +204,161 @@ app.delete("/api/users/:id", async (req, res) => {
   }
 });
 
-// Fetch Products
+// // Fetch Products
+// app.get("/api/products", async (req, res) => {
+//   try {
+//     const products = await Product.find();
+//     res.status(200).json(products);
+//   } catch (error) {
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
+// // POST - Add new product
+// app.post("/api/products", async (req, res) => {
+//   try {
+//       const { skinType, productName, concern, productUrl, productPic, price } = req.body;
+
+//       if (!skinType || !productName || !concern || !productUrl || !productPic || !price) {
+//           return res.status(400).json({ message: "All fields are required!" });
+//       }
+
+//       const newProduct = new Product({
+//           skinType,
+//           productName,
+//           concern,
+//           productUrl,
+//           productPic,
+//           price,
+//       });
+
+//       await newProduct.save();
+//       res.status(201).json({ message: "Product added successfully!", product: newProduct });
+//   } catch (error) {
+//       res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
+
+
+
+
+
+// Add a new product
+app.post("/api/products", async (req, res) => {
+  try {
+    const {
+      productName,
+      brand,
+      skinType,
+      concern,
+      ingredients,
+      usageInstructions,
+      benefits,
+      productUrl,
+      productPic,
+      price,
+    } = req.body;
+
+    const newProduct = new Product({
+      productName,
+      brand,
+      skinType,
+      concern,
+      ingredients,
+      usageInstructions,
+      benefits,
+      productUrl,
+      productPic,
+      price,
+    });
+
+    await newProduct.save();
+    res.status(201).json({ message: "Product added successfully", product: newProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error adding product", error: error.message });
+  }
+});
+
+// Get all products
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(error);
+    res.status(500).json({ message: "Error fetching products", error: error.message });
   }
 });
 
-// POST - Add new product
-app.post("/api/products", async (req, res) => {
+// Update a product
+app.put("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    productName,
+    brand,
+    skinType,
+    concern,
+    ingredients,
+    usageInstructions,
+    benefits,
+    productUrl,
+    productPic,
+    price,
+  } = req.body;
+
   try {
-      const { skinType, productName, concern, productUrl, productPic, price } = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        productName,
+        brand,
+        skinType,
+        concern,
+        ingredients,
+        usageInstructions,
+        benefits,
+        productUrl,
+        productPic,
+        price,
+      },
+      { new: true }
+    );
 
-      if (!skinType || !productName || !concern || !productUrl || !productPic || !price) {
-          return res.status(400).json({ message: "All fields are required!" });
-      }
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-      const newProduct = new Product({
-          skinType,
-          productName,
-          concern,
-          productUrl,
-          productPic,
-          price,
-      });
-
-      await newProduct.save();
-      res.status(201).json({ message: "Product added successfully!", product: newProduct });
+    res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
   } catch (error) {
-      res.status(500).json({ message: "Internal Server Error" });
+    console.error(error);
+    res.status(500).json({ message: "Error updating product", error: error.message });
   }
 });
+
+// Delete a product
+app.delete("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting product", error: error.message });
+  }
+});
+
+
+
+
+
 
 // Fetch Product Recommendations
 app.get("/api/products/recommend", async (req, res) => {
@@ -466,7 +588,30 @@ app.get("/api/user/me", async (req, res) => {
 
 
 
-// Middleware to verify JWT
+// // Middleware to verify JWT
+// const verifyToken = (req, res, next) => {
+//   const authHeader = req.header("Authorization");
+
+//   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//     return res.status(401).json({ message: "Access Denied: No token provided" });
+//   }
+
+//   const token = authHeader.split(" ")[1];
+
+//   try {
+//     const verified = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = verified;
+//     next();
+//   } catch (error) {
+//     res.status(401).json({ message: "Invalid or expired token" });
+//   }
+// };
+
+
+
+
+
+
 const verifyToken = (req, res, next) => {
   const authHeader = req.header("Authorization");
 
@@ -478,13 +623,12 @@ const verifyToken = (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
+    req.user = verified; // Ensure this contains user data
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
-
 
 
 
@@ -1045,6 +1189,137 @@ app.post("/api/product/:id/review", async (req, res) => {
 });
 
 
+
+
+
+
+
+
+// Feedback Schema and Model
+const feedbackSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 },
+  comment: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+});
+
+
+
+// User Schema (For authentication purposes)
+const userSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String
+});
+
+
+
+// // Authentication Middleware
+// const verifyToken = async (req, res, next) => {
+//   const token = req.header('Authorization')?.split(' ')[1]; // Extract token
+
+//   if (!token) {
+//     return res.status(401).json({ message: 'Access Denied. No token provided.' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = await User.findById(decoded.id).select('-password'); // Fetch user data except password
+//     next();
+//   } catch (error) {
+//     res.status(401).json({ message: 'Invalid Token' });
+//   }
+// };
+
+// Submit feedback
+app.post("/api/feedback", authenticateUser, async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+    if (!rating || !comment) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const newFeedback = new Feedback({
+      userId: req.user.id, // Attach user ID from token
+      rating,
+      comment,
+    });
+
+    await newFeedback.save();
+    res.json({ message: "Feedback submitted successfully" });
+  } catch (error) {
+    console.error("Feedback submission error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all feedback
+app.get("/api/feedback", authenticateUser, async (req, res) => {
+  try {
+    console.log("Fetching feedback...");
+
+    console.log("Authenticated User ID:", req.user?.id); // Debug log
+
+    const feedbacks = await Feedback.find().populate("userId", "username");
+
+    if (!feedbacks.length) {
+      console.log("No feedback found.");
+      return res.status(200).json({ message: "No feedback available yet." });
+    }
+
+    console.log("Feedback Data Sent:", feedbacks);
+    res.json(feedbacks);
+  } catch (error) {
+    console.error("Fetching feedback error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
+// app.delete("/api/feedback/:id", authenticateUser, async (req, res) => {
+//   try {
+//     const feedbackId = req.params.id;
+//     const userId = req.user.id; // Extract user ID from token
+
+//     const feedback = await Feedback.findById(feedbackId);
+//     if (!feedback) {
+//       return res.status(404).json({ message: "Feedback not found." });
+//     }
+
+//     // Check if the logged-in user is the owner of the feedback
+//     if (feedback.userId.toString() !== userId) {
+//       return res.status(403).json({ message: "Unauthorized to delete this feedback." });
+//     }
+
+//     await Feedback.findByIdAndDelete(feedbackId);
+//     res.json({ message: "Feedback deleted successfully." });
+//   } catch (error) {
+//     console.error("Error deleting feedback:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
+
+// Delete only the user's own feedback
+app.delete("/api/feedback/:id", authMiddleware, async (req, res) => {
+  try {
+    const feedback = await Feedback.findById(req.params.id);
+
+    if (!feedback) {
+      return res.status(404).json({ message: "Feedback not found" });
+    }
+
+    // Check if the logged-in user is the owner of the feedback
+    if (feedback.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized to delete this feedback" });
+    }
+
+    await feedback.deleteOne();
+    res.json({ message: "Feedback deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting feedback" });
+  }
+});
 
 
 

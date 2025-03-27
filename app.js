@@ -82,15 +82,45 @@ app.post('/Signup', async (req, res) => {
   }
 });
 
+// // User Login
+// app.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(400).json({ message: "User not found" });
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+//     const token = jwt.sign(
+//       { id: user._id, role: user.role },
+//       JWT_SECRET, 
+//       { expiresIn: '1h' }
+//     );
+
+//     res.status(200).json({ token, userId: user._id, role: user.role });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+
+
+
 // User Login
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User not found" });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
@@ -98,11 +128,19 @@ app.post('/login', async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ token, userId: user._id, role: user.role });
+    // ✅ Now returning username in the response
+    res.status(200).json({ 
+      token, 
+      userId: user._id, 
+      username: user.username,  // ✅ Include username 
+      role: user.role 
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 // Middleware to Verify Admin
 const verifyAdmin = (req, res, next) => {
@@ -422,149 +460,210 @@ app.get("/api/user/me", async (req, res) => {
 
 
 
-// ✅ Add Review
-app.post("/api/reviews/add", authenticateUser, async (req, res) => {
-  try {
-    const { productId, rating, comment } = req.body;
 
-    if (!productId || !rating || !comment) {
-      return res.status(400).json({ error: "All fields are required!" });
-    }
+
+
+
+
+
+// Middleware to verify JWT
+const verifyToken = (req, res, next) => {
+  const authHeader = req.header("Authorization");
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Access Denied: No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+
+
+
+
+// // ➤ **Add Review**
+// app.post("/api/reviews/add", verifyToken, async (req, res) => {
+//   try {
+//     console.log("🔹 Received Review Data:", req.body);
+
+//     const { productId, rating, comment } = req.body;
+//     const { id: userId, username } = req.user; // Extract from token
+
+//     if (!username) {
+//       return res.status(400).json({ error: "Username is required" });
+//     }
+
+//     const newReview = new Review({ userId, username, productId, rating, comment });
+//     await newReview.save();
+
+//     res.status(201).json({
+//       message: "Review added successfully",
+//       reviewId: newReview._id,
+//     });
+//   } catch (error) {
+//     console.error("Error adding review:", error);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+
+
+
+
+
+
+
+// // ➤ **Get All Reviews for a Product**
+// app.get('/api/reviews/:productId', async (req, res) => {
+//   try {
+//     const reviews = await Review.find({ productId: req.params.productId });
+
+//     if (!reviews.length) {
+//       return res.status(404).json({ message: "No reviews found for this product" });
+//     }
+
+//     console.log("🔹 Reviews Retrieved:", reviews);
+
+//     res.json(reviews);
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// });
+
+
+
+
+// app.delete("/api/reviews/delete/:reviewId", verifyToken, async (req, res) => {
+//   try {
+//     console.log("🔹 Received delete request for:", req.params.reviewId);
+
+//     if (!mongoose.Types.ObjectId.isValid(req.params.reviewId)) {
+//       return res.status(400).json({ message: "Invalid review ID format" });
+//     }
+
+//     const review = await Review.findById(req.params.reviewId);
+//     if (!review) {
+//       return res.status(404).json({ message: "Review not found" });
+//     }
+
+//     if (review.userId.toString() !== req.user.id) {
+//       return res.status(403).json({ message: "Unauthorized: Cannot delete this review" });
+//     }
+
+//     await review.deleteOne();
+//     res.status(200).json({ message: "Review deleted successfully" });
+//   } catch (error) {
+//     console.error("Error deleting review:", error);
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// });
+
+
+
+
+
+
+
+// ➤ **Add a Review**
+app.post("/api/reviews/add", verifyToken, async (req, res) => {
+  try {
+    console.log("🔹 Received Review Data:", req.body);
+    const { productId, rating, comment } = req.body;
+    const { id: userId, username } = req.user; // Extract from token
 
     if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ error: "Invalid product ID" });
+      return res.status(400).json({ error: "Invalid Product ID" });
     }
 
-    const newReview = new Review({
-      userId: req.user.id,
-      productId,
-      rating,
-      comment,
-    });
+    if (!username) {
+      return res.status(400).json({ error: "Username is required" });
+    }
 
-    const savedReview = await newReview.save();
-    res.status(201).json({ message: "Review added successfully", review: savedReview });
+    const newReview = new Review({ userId, username, productId, rating, comment });
+    await newReview.save();
+
+    res.status(201).json({
+      message: "Review added successfully",
+      review: newReview,
+    });
   } catch (error) {
     console.error("Error adding review:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// ✅ Get Reviews for a Product
+// ➤ **Get All Reviews for a Product**
 app.get("/api/reviews/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
-
+    
     if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ error: "Invalid product ID" });
+      return res.status(400).json({ message: "Invalid Product ID format" });
     }
 
     const reviews = await Review.find({ productId });
-    res.json(reviews);
+
+    res.json(reviews.length ? reviews : { message: "No reviews found for this product" });
   } catch (error) {
-    console.error("Error fetching reviews:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-// ✅ Get Average Rating for a Product
-app.get("/api/reviews/average/:productId", async (req, res) => {
+// ➤ **Delete a Review**
+app.delete("/api/reviews/delete/:reviewId", verifyToken, async (req, res) => {
   try {
-    const { productId } = req.params;
+    console.log("🔹 Received delete request for:", req.params.reviewId);
 
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ error: "Invalid product ID" });
+    if (!mongoose.Types.ObjectId.isValid(req.params.reviewId)) {
+      return res.status(400).json({ message: "Invalid review ID format" });
+    }
+
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    if (review.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized: Cannot delete this review" });
+    }
+
+    await review.deleteOne();
+    res.status(200).json({ message: "Review deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+// ✅ GET Reviews by Product ID
+app.get("/api/reviews", async (req, res) => {
+  try {
+    const { productId } = req.query;
+    if (!productId) {
+      return res.status(400).json({ message: "Product ID is required" });
     }
 
     const reviews = await Review.find({ productId });
 
     if (reviews.length === 0) {
-      return res.json({ averageRating: 0 });
+      return res.status(404).json({ message: "No reviews found for this product" });
     }
 
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const averageRating = parseFloat((totalRating / reviews.length).toFixed(1));
-
-    res.json({ averageRating });
-  } catch (error) {
-    console.error("Error calculating average rating:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-
-
-
-// ✅ Get all reviews for a product
-app.get("/api/reviews/:productId", async (req, res) => {
-  try {
-    const reviews = await Review.find({ productId: req.params.productId }).sort({ createdAt: -1 });
-    res.json(reviews);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching reviews", error });
-  }
-});
-
-app.post("/api/reviews/add", async (req, res) => {
-  try {
-      const { productId, username, comment, rating } = req.body;
-
-      // Validate required fields
-      if (!productId || !username || !comment || !rating) {
-          return res.status(400).json({ message: "All fields are required." });
-      }
-
-      const newReview = new Review({
-          productId,
-          username,
-          comment,
-          rating,
-      });
-
-      await newReview.save();
-      res.status(201).json({ message: "Review added successfully!" });
-  } catch (error) {
-      console.error("Server Error:", error);
-      res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-// Get product by ID (Including Reviews)
-app.get("/api/products/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: "Product not found" });
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// Add a Review to a Product
-app.post("/api/products/:id/reviews", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: "Product not found" });
-
-    const { user, rating, comment } = req.body;
-    if (!user || !rating || !comment) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    const newReview = { user, rating, comment };
-    product.reviews.push(newReview);
-    await product.save();
-    
-    res.json({ message: "Review added", product });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// Get Reviews for a Product
-app.get("/api/reviews/:productId", async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const reviews = await Review.find({ productId }).populate("userId", "username");
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -573,21 +672,33 @@ app.get("/api/reviews/:productId", async (req, res) => {
 
 
 
-// ✅ Delete a review (only by the review owner)
-app.delete("/api/products/:id/reviews/:reviewId", async (req, res) => {
+
+
+
+
+app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: "Product not found" });
-
-    // Find and remove the review
-    product.reviews = product.reviews.filter((review) => review._id.toString() !== req.params.reviewId);
-    await product.save();
-
-    res.json({ message: "Review deleted", product });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: "Server error" });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Get total counts for dashboard
 app.get("/api/admin/dashboard-stats", async (req, res) => {
@@ -869,8 +980,69 @@ app.post("/api/orders", async (req, res) => {
 
 
 
+// API to fetch recommended products based on skin type and concern
+app.get("/api/recommended-products", async (req, res) => {
+  const { skinType, skinCondition } = req.query;
+
+  if (!skinType || !skinCondition) {
+    return res.status(400).json({ error: "Missing required parameters: skinType or skinCondition" });
+  }
+
+  try {
+    const products = await Product.find({
+      skinType: { $regex: new RegExp(skinType, "i") },
+      concern: { $regex: new RegExp(skinCondition, "i") },
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 
+// API: Get Product Details (including Reviews)
+app.get("/api/products/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+
+// API: Add a Review to a Product
+app.post("/api/product/:id/review", async (req, res) => {
+  try {
+    const { user, rating, comment } = req.body;
+    if (!user || !rating || !comment) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Add new review
+    const newReview = { user, rating, comment, date: new Date() };
+    product.reviews.push(newReview);
+    await product.save();
+
+    res.status(201).json({ message: "Review added successfully!", product });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 
 

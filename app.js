@@ -157,7 +157,6 @@ const verifyAdmin = (req, res, next) => {
     res.status(401).json({ message: "Invalid token" });
   }
 };
-
 // Admin creation route
 app.post("/create-admin", async (req, res) => {
   try {
@@ -1321,6 +1320,69 @@ app.delete("/api/feedback/:id", authMiddleware, async (req, res) => {
   }
 });
 
+
+
+
+
+// Get all feedback with user details
+app.get('/api/admin/feedback', async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find()
+      .populate('userId', 'username email') // Populate the user details (username, email)
+      .sort({ createdAt: -1 }); // Sort feedbacks by latest first
+    res.json(feedbacks);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching feedback', error: error.message });
+  }
+});
+
+// Get feedback by userId
+app.get('/api/admin/feedback/:userId', async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find({ userId: req.params.userId })
+      .populate('userId', 'username email');
+    res.json(feedbacks);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching feedback', error: error.message });
+  }
+});
+
+// Mark feedback as resolved
+app.patch('/api/admin/feedback/:id', async (req, res) => {
+  try {
+    const feedbackId = req.params.id;
+    const updatedFeedback = await Feedback.findByIdAndUpdate(
+      feedbackId,
+      { status: 'Resolved' }, // If you want to add a status field, you can
+      { new: true } // Return the updated document
+    );
+    if (!updatedFeedback) {
+      return res.status(404).json({ message: 'Feedback not found' });
+    }
+    res.json(updatedFeedback);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating feedback', error: error.message });
+  }
+});
+
+// Add new feedback
+app.post('/api/admin/feedback', async (req, res) => {
+  try {
+    const { userId, rating, comment } = req.body;
+
+    // Ensure the userId is valid
+    const userExists = await User.findById(userId);
+    if (!userExists) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const newFeedback = new Feedback({ userId, rating, comment });
+    await newFeedback.save();
+    res.status(201).json(newFeedback);
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding feedback', error: error.message });
+  }
+});
 
 
 // Start the server
